@@ -6,7 +6,8 @@ public class Guess {
 		// TODO Auto-generated method stub
 		int roll = 0;
 		int guess= 0;
-		roll=(int) rollDice();
+		range = getRange();
+		roll=(int) rollDiceInt(range);
 		System.out.println(roll);
 		while(guess!=roll) {
 			guess = getGuess();
@@ -21,27 +22,41 @@ public class Guess {
 		}
 		
 	}
+	
 	/*
 	 * Has the computer randomly choose a number between 1-100
-	 * @param
-	 * @return double myRoll
+	 * @param int upperRange
+	 * @return int myRoll
 	 */
-	public static double rollDice() {
-		double myRoll=Math.round(Math.random()*100)+1;
+	public static int rollDiceInt(int upperRange) {
+		int myRoll=(int)Math.floor(Math.random()*upperRange)+1;
 		System.out.println(myRoll);
 		return myRoll;
 	}
 	
 	/* 
-	 * Obtains user input of an integer between 1-100
+	 * Obtains user input of an integer between 1 & the user input range number.
 	 * @param 
 	 * @return int guess
 	 */
 	public static int getGuess() {
-		System.out.print("Enter guess (1-100): ");
+		System.out.print("Enter guess (1-"+range+"): ");
 		Scanner manualInput = new Scanner(System.in);
 		int guess = manualInput.nextInt();
 		return guess;
 	}
 	
+	/* 
+	 * Obtains user input of the range of numbers
+	 * @param 
+	 * @return int range
+	 */
+	public static int getRange() {
+		System.out.print("Enter upperRange: ");
+		Scanner manualInput = new Scanner(System.in);
+		int range = manualInput.nextInt();
+		return range;
+	}
+	
+	public static int range;
 }
