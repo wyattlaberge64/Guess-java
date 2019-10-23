@@ -1,26 +1,45 @@
 import java.util.Scanner;
-
+import java.lang.Integer.*;
 public class Guess {
-
+	
+	static int totalTurns = 0;
+	static int games = 0;
+	static boolean quit = false; 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		int roll = 0;
-		int guess= 0;
-		range = getRange();
-		roll=(int) rollDiceInt(range);
-		System.out.println(roll);
-		while(guess!=roll) {
-			guess = getGuess();
-			System.out.println(guess);
-			if(guess==roll) {
-				System.out.println("You guessed correctly congradulations");
-			}else if(guess>roll) {
-				System.out.println("You guessed too high! Try again");
-			}else {
-				System.out.println("You guessed too low! Try again");
+		
+		boolean again = true;
+		
+		while(again == true) {
+			games++;
+			int roll = 0;
+			int guess = 0;
+			int turns = 0;
+			range = getRange();
+			roll=(int) rollDiceInt(range);
+			System.out.println(roll);
+			while(guess!=roll || guess!=-1) {
+				guess = getGuess();
+				System.out.println(guess);
+				if(guess == -1) {
+						break;
+					}
+				else if(validate(guess) == true) {
+					turns++;
+					if(guess==roll) {
+						System.out.println("You guessed correctly congradulations");
+						gameStats(turns);
+						again = newGame();
+					}else if(guess>roll) {
+						System.out.println("You guessed too high! Try again");
+					}else {
+						System.out.println("You guessed too low! Try again");
+					}
+				}else {
+					System.out.println("Invalid guess, try again!");
+				}
 			}
 		}
-		
 	}
 	
 	/*
@@ -42,10 +61,25 @@ public class Guess {
 	public static int getGuess() {
 		System.out.print("Enter guess (1-"+range+"): ");
 		Scanner manualInput = new Scanner(System.in);
-		int guess = manualInput.nextInt();
-		return guess;
+		String guess = manualInput.nextLine();
+		if(guess.equals("q")) {
+			
+			return -1;
+		}
+		else if(guess!="q") {
+			int intGuess = parseInt(manualInput);
+			return intGuess;
+		}
+		else {
+			return 0;
+		}
 	}
 	
+	private static int parseInt(Scanner manualInput) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 	/* 
 	 * Obtains user input of the range of numbers
 	 * @param 
@@ -59,4 +93,44 @@ public class Guess {
 	}
 	
 	public static int range;
+	
+	/*
+	 * 
+	 * @param 
+	 */
+	public static void gameStats(int turns) {
+		System.out.println("You got it in "+turns+" turns!");
+		totalTurns += turns;
+		int averageTurns = totalTurns / games;
+		System.out.println("You won "+games+" games with an average of "+averageTurns+" turns per game!");
+	}
+	
+	/*
+	 * 
+	 * @return boolean
+	 */
+	public static boolean newGame() {
+		System.out.print("Play again? Y=yes");
+		Scanner manualInput = new Scanner(System.in);
+		String again = manualInput.nextLine();
+		if(again == "Y") {
+			return true;
+		}else {
+			System.out.println("Sorry to see you go!");
+			return false;
+		}
+	}
+	
+	/*
+	 * 
+	 * @param 
+	 * @return boolean
+	 */
+	public static boolean validate(int guess) {
+		if(guess > 0 && guess < 100) {
+			return true;
+		}else {
+			return false;
+		}
+	}
 }
