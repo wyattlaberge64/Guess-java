@@ -63,21 +63,18 @@ public class Guess {
 		Scanner manualInput = new Scanner(System.in);
 		String guess = manualInput.nextLine();
 		if(guess.equals("q")) {
-			
 			return -1;
 		}
-		else if(guess!="q") {
-			int intGuess = parseInt(manualInput);
+		else{
+			int intGuess = parseInt(guess);
 			return intGuess;
-		}
-		else {
-			return 0;
 		}
 	}
 	
-	private static int parseInt(Scanner manualInput) {
+	private static int parseInt(String guess) {
 		// TODO Auto-generated method stub
-		return 0;
+		int intGuess = Integer.parseInt(guess);
+		return intGuess;
 	}
 
 	/* 
